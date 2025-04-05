@@ -3,8 +3,6 @@ import "../Styles/AdminDashboard.css";
 import { db } from "../firebaseConfig";
 import { collection, addDoc, doc, setDoc,getDocs } from "firebase/firestore"; // Make sure this import is present
 
-
-
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState("home");
   const [childRecords, setChildRecords] = useState([]);
