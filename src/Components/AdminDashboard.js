@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../Styles/AdminDashboard.css";
 import { db } from "../firebaseConfig";
-import { collection, addDoc, doc, setDoc } from "firebase/firestore"; // Make sure this import is present
+import { collection, addDoc, doc, setDoc,getDocs } from "firebase/firestore"; // Make sure this import is present
 
 
 
@@ -22,6 +22,19 @@ const AdminDashboard = () => {
     hasBirthmark: "No",
     birthmarkLocation: "",
   });
+
+  useEffect(() => {
+    const fetchChildren = async () => {
+      if (activeTab === "view") {
+        const querySnapshot = await getDocs(collection(db, "children"));
+        const childrenData = querySnapshot.docs.map(doc => doc.data());
+        setChildRecords(childrenData);
+      }
+    };
+  
+    fetchChildren();
+  }, [activeTab]);
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -84,7 +97,7 @@ const AdminDashboard = () => {
           Register New Child
         </button>
         <button onClick={() => setActiveTab("view")} className={activeTab === "view" ? "active" : ""}>
-          View All Children
+          View All Data
         </button>
       </div>
       <h1 style={{ fontSize: "2.8rem", fontWeight: "bold", color: "#2b2d42" }}>
