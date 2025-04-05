@@ -1,60 +1,105 @@
-.user-dashboard {
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-family: Arial, sans-serif;
+#UserDashboard_div {
+    width: 100%;
+    min-height: 100vh;
+    background-image: url("../Resources/AdminDashboardBGC.png"); /* 🔁 adjust the path if needed */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   }
   
-  .user-dashboard h1 {
-    text-align: center;
+  
+  h1 {
+    margin-bottom: 1.5rem;
     color: #333;
   }
   
-  .search-section {
+  .info {
+    width: 90%;
+    max-width: 1000px;
     display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-  }
-  
-  .search-section input {
-    flex: 1;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-right: 10px;
-  }
-  
-  .search-section button {
-    padding: 10px 20px;
-    font-size: 16px;
-    border: none;
-    background-color: #007bff;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .search-section button:hover {
-    background-color: #0056b3;
-  }
-  
-  .baby-details {
-    margin-top: 20px;
-    padding: 15px;
+    flex-direction: row;
+    gap: 2rem;
+    padding: 2rem;
     background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   }
   
-  .baby-details p {
-    margin: 5px 0;
+  .left,
+  .right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
   }
   
-  .error {
-    color: red;
-    font-weight: bold;
-  }  
+  .left img {
+    height: 80px;
+    object-fit: contain;
+  }
+  
+  #id_input {
+    width: 100%;
+    max-width: 300px;
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    transition: 0.3s;
+  }
+  
+  #id_input:focus {
+    border-color: #0077ff;
+    box-shadow: 0 0 5px rgba(0, 119, 255, 0.2);
+  }
+  
+  #search_buttom {
+    padding: 0.6rem 1.5rem;
+    background-color: #0077ff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  #search_buttom:hover {
+    background-color: #005fcb;
+  }
+  
+  .result {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    width: 100%;
+  }
+  
+  .result p {
+    font-size: 1rem;
+    color: #444;
+    text-align: left;
+    width: 100%;
+    padding: 0.3rem 0.5rem;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .result p strong {
+    color: #222;
+  }
+  
+  @media (min-width: 768px) {
+    .result {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  

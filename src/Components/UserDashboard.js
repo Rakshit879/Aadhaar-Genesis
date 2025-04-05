@@ -1,83 +1,90 @@
 import React, { useState } from "react";
+import "../Styles/UserDashboard.css";
+import Logo from '../Resources/Logo.jpg';
+
 import { db } from "../firebaseConfig";
 import { doc, getDoc } from "firebase/firestore";
-import "../Styles/UserDashboard.css"; // Add styles for the user dashboard if needed
 
-const UserDashboard = () => {
-  const [searchId, setSearchId] = useState(""); // Holds the unique ID input
-  const [babyDetails, setBabyDetails] = useState(null); // Holds the fetched details
-  const [loading, setLoading] = useState(false); // To show loading state
-  const [error, setError] = useState(null); // To handle errors
+// Default empty child data
+const initialChildData = {
+  name: "",
+  gender: "",
+  dob: "",
+  timeOfBirth: "",
+  weight: "",
+  disability: "",
+  category: "",
+  hasBirthmark: "",
+  birthmarkLocation: "",
+  fatherName: "",
+  motherName: "",
+  address: "",
+  uniqueId: "",
+  createdAt: null,
+};
+
+function UserDashboard() {
+  const [uniqueId, setUniqueId] = useState("");
+  const [childData, setChildData] = useState(initialChildData);
+  const [error, setError] = useState("");
 
   const handleSearch = async () => {
-    setLoading(true);
-    setError(null);
-
     try {
-      // Fetch the document from Firestore using the provided unique ID
-      const docRef = doc(db, "children", searchId);
+      const docRef = doc(db, "children", uniqueId);
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
-        setBabyDetails(docSnap.data());
-        setError(null);
+        setChildData(docSnap.data());
+        setError("");
       } else {
-        setError("No record found for the provided ID.");
-        setBabyDetails(null);
+        setChildData(initialChildData);
+        setError("No record found.");
       }
-    } catch (error) {
-      console.error("Error fetching baby details: ", error);
-      setError("An error occurred while fetching the details.");
-      setBabyDetails(null);
+    } catch (err) {
+      console.error("Error fetching document:", err);
+      setChildData(initialChildData);
+      setError("Error fetching data.");
     }
-
-    setLoading(false);
   };
 
   return (
-    <div className="user-dashboard">
-      <h1>User Dashboard</h1>
-      <p>Enter the unique ID to fetch the details of a registered baby.</p>
-
-      {/* Search Input */}
-      <div className="search-section">
-        <input
-          type="text"
-          placeholder="Enter Unique ID"
-          value={searchId}
-          onChange={(e) => setSearchId(e.target.value)}
-        />
-        <button onClick={handleSearch}>Search</button>
-      </div>
-
-      {/* Loading State */}
-      {loading && <p>Loading...</p>}
-
-      {/* Error Message */}
-      {error && <p className="error">{error}</p>}
-
-      {/* Baby Details */}
-      {babyDetails && (
-        <div className="baby-details">
-          <h3>Baby Details</h3>
-          <p><strong>Name:</strong> {babyDetails.name}</p>
-          <p><strong>Date of Birth:</strong> {babyDetails.dob}</p>
-          <p><strong>Time of Birth:</strong> {babyDetails.timeOfBirth}</p>
-          <p><strong>Gender:</strong> {babyDetails.gender}</p>
-          <p><strong>Weight:</strong> {babyDetails.weight} kg</p>
-          <p><strong>Father's Name:</strong> {babyDetails.fatherName}</p>
-          <p><strong>Mother's Name:</strong> {babyDetails.motherName}</p>
-          <p><strong>Address:</strong> {babyDetails.address}</p>
-          <p><strong>Category:</strong> {babyDetails.category}</p>
-          <p><strong>Disability:</strong> {babyDetails.disability || "None"}</p>
-          <p><strong>Birthmark:</strong> {babyDetails.hasBirthmark === "Yes"
-            ? `Yes, located at ${babyDetails.birthmarkLocation}`
-            : "No"}
-          </p>
+    <div id="UserDashboard_div">
+      <h1>Welcome to DOC2DOOR</h1>
+      <div className="info">
+        <div className="left">
+          <img src={Logo} alt="Logo" height="100px" />
+          <input
+            type="text"
+            placeholder="Enter the Unique ID"
+            id="id_input"
+            value={uniqueId}
+            onChange={(e) => setUniqueId(e.target.value)}
+          />
+          <button id="search_buttom" onClick={handleSearch}>Search</button>
+          {error && <p style={{ color: "red" }}>{error}</p>}
         </div>
-      )}
+
+        <div className="right">
+          <div className="result">
+            <p><strong>Name:</strong> {childData.name || "—"}</p>
+            <p><strong>Gender:</strong> {childData.gender || "—"}</p>
+            <p><strong>Date of Birth:</strong> {childData.dob || "—"}</p>
+            <p><strong>Time of Birth:</strong> {childData.timeOfBirth || "—"}</p>
+            <p><strong>Weight:</strong> {childData.weight || "—"}</p>
+            <p><strong>Disability:</strong> {childData.disability || "—"}</p>
+            <p><strong>Category:</strong> {childData.category || "—"}</p>
+            <p><strong>Has Birthmark:</strong> {childData.hasBirthmark || "—"}</p>
+            <p><strong>Birthmark Location:</strong> {childData.birthmarkLocation || "—"}</p>
+            <p><strong>Father's Name:</strong> {childData.fatherName || "—"}</p>
+            <p><strong>Mother's Name:</strong> {childData.motherName || "—"}</p>
+            <p><strong>Address:</strong> {childData.address || "—"}</p>
+            <p><strong>Unique ID:</strong> {childData.uniqueId || "—"}</p>
+            <p><strong>Created At:</strong> {childData.createdAt ? childData.createdAt.toDate().toLocaleString() : "—"}</p>
+          </div>
+        </div>
+      </div>
     </div>
   );
-};
+}
 
 export default UserDashboard;
