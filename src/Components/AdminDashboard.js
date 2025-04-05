@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import "../Styles/AdminDashboard.css";
+import { db } from "../firebaseConfig";
+import { collection, addDoc, doc, setDoc } from "firebase/firestore"; // Make sure this import is present
+
+
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState("home");
@@ -24,25 +28,50 @@ const AdminDashboard = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setChildRecords((prev) => [...prev, formData]);
-    setFormData({
-      name: "",
-      dob: "",
-      timeOfBirth: "",
-      gender: "",
-      weight: "",
-      fatherName: "",
-      motherName: "",
-      address: "",
-      category: "",
-      disability: "",
-      hasBirthmark: "No",
-      birthmarkLocation: "",
-    });
-    setActiveTab("view");
+
+    try {
+      // First, create the document with an auto-generated ID
+      const docRef = await addDoc(collection(db, "children"), {
+        ...formData,
+        createdAt: new Date(),
+        uniqueId: "" // placeholder, we'll update this
+      });
+
+      // Then, update the same document to include its own ID as 'uniqueId'
+      await setDoc(doc(db, "children", docRef.id), {
+        ...formData,
+        createdAt: new Date(),
+        uniqueId: docRef.id
+      });
+
+      alert(`Child registered successfully ✅\nID: ${docRef.id}`);
+
+      // Reset form
+      setFormData({
+        name: "",
+        dob: "",
+        timeOfBirth: "",
+        gender: "",
+        weight: "",
+        fatherName: "",
+        motherName: "",
+        address: "",
+        category: "",
+        disability: "",
+        hasBirthmark: "No",
+        birthmarkLocation: "",
+      });
+
+      setActiveTab("view");
+    } catch (error) {
+      console.error("Error saving to Firestore: ", error);
+      alert("Failed to register child ❌");
+    }
   };
+
 
   return (
     <div className="dashboard-container">
@@ -63,7 +92,7 @@ const AdminDashboard = () => {
       </h1>
       <p>Welcome, Admin! This is your control panel for child registrations.</p>
 
-      
+
 
       {/* Tab Content */}
       <div>
