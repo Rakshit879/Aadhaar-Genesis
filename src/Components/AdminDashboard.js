@@ -19,6 +19,7 @@ const AdminDashboard = () => {
     disability: "",
     hasBirthmark: "No",
     birthmarkLocation: "",
+    certificateUrl: "",
   });
 
   useEffect(() => {
@@ -74,6 +75,7 @@ const AdminDashboard = () => {
         disability: "",
         hasBirthmark: "No",
         birthmarkLocation: "",
+        certificateUrl:"",
       });
 
       setActiveTab("view");
@@ -102,8 +104,6 @@ const AdminDashboard = () => {
         DocXyy Hospital Dashboard
       </h1>
       <p>Welcome, Admin! This is your control panel for child registrations.</p>
-
-
 
       {/* Tab Content */}
       <div>
@@ -209,6 +209,10 @@ const RegisterChildForm = ({ formData, handleChange, handleSubmit }) => (
         <input type="text" name="birthmarkLocation" value={formData.birthmarkLocation} onChange={handleChange} required />
       </label>
     )}
+    <label>
+      Certificate Url
+      <input type="text" name="certificateUrl" value={formData.certificateUrl} onChange={handleChange} required/>
+    </label>
     <button type="submit">Submit</button>
   </form>
 );
@@ -233,6 +237,7 @@ const ChildList = ({ childRecords }) => (
             <th>Category</th>
             <th>Disability</th>
             <th>Birthmark</th>
+            <th>Certificate</th>
           </tr>
         </thead>
         <tbody>
@@ -249,6 +254,7 @@ const ChildList = ({ childRecords }) => (
               <td>{child.category}</td>
               <td>{child.disability || "None"}</td>
               <td>{child.hasBirthmark === "Yes" ? `Yes, ${child.birthmarkLocation}` : "No"}</td>
+              <td>{child.certificateUrl}</td>
             </tr>
           ))}
         </tbody>

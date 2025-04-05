@@ -19,6 +19,7 @@ const initialChildData = {
   fatherName: "",
   motherName: "",
   address: "",
+  certificateUrl: "", // Document URL added for downloading
   uniqueId: "",
   createdAt: null,
 };
@@ -26,9 +27,12 @@ const initialChildData = {
 function UserDashboard() {
   const [uniqueId, setUniqueId] = useState("");
   const [childData, setChildData] = useState(initialChildData);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   const handleSearch = async () => {
+    setLoading(true);
+    setError("");
     try {
       const docRef = doc(db, "children", uniqueId);
       const docSnap = await getDoc(docRef);
@@ -45,7 +49,35 @@ function UserDashboard() {
       setChildData(initialChildData);
       setError("Error fetching data.");
     }
+    setLoading(false);
   };
+
+  const handleDownload = () => {
+    if (childData.certificateUrl) {
+      const googleDriveUrl = childData.certificateUrl;
+  
+      // Check if the URL is a Google Drive link
+      if (googleDriveUrl.includes("drive.google.com")) {
+        const fileId = googleDriveUrl.split("/d/")[1]?.split("/")[0]; // Extract the FILE_ID
+        const downloadUrl = `https://drive.google.com/uc?id=${fileId}&export=download`;
+        
+        const link = document.createElement("a");
+        link.href = downloadUrl; // Set the modified URL for direct download
+        link.setAttribute("download", "certificate.pdf");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } else {
+        const link = document.createElement("a");
+        link.href = childData.certificateUrl; // Use the original URL for non-Google Drive files
+        link.setAttribute("download", "certificate.pdf");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    }
+  };
+  
 
   return (
     <div id="UserDashboard_div">
@@ -80,6 +112,17 @@ function UserDashboard() {
             <p><strong>Address:</strong> {childData.address || "—"}</p>
             <p><strong>Unique ID:</strong> {childData.uniqueId || "—"}</p>
             <p><strong>Created At:</strong> {childData.createdAt ? childData.createdAt.toDate().toLocaleString() : "—"}</p>
+
+            {/* Download Document Button */}
+            {childData.certificateUrl ? (
+              <div>
+                <button onClick={handleDownload} className="download-button">
+                  Download Certificate
+                </button>
+              </div>
+            ) : (
+              <p>No certificate available for this baby.</p>
+            )}
           </div>
         </div>
       </div>
