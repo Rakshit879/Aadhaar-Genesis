@@ -1,0 +1,206 @@
+/* AdminDashboard.css */
+
+/* General Styles */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f5f7fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width: 100vw;
+    height: 100vh;
+  }
+  
+  .dashboard-container {
+    padding: 40px;
+    width: 100vw;
+    min-height: 100vh;
+    height: 100%;
+    margin: auto;
+    background-color: #ffffff; /* fallback color */
+    background-image: url('../Resources/AdminDashboardBGC.png'); /* Path to your image */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .dashboard-container::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.8); /* Light overlay */
+    z-index: 0;
+    border-radius: 12px;
+    height: max-content;
+  }
+  .dashboard-container > * {
+    position: relative;
+    z-index: 1;
+  }
+  
+  
+  /* Header */
+  .dashboard-container h1 {
+    font-size: 2.5rem;
+    color: #2f3542;
+    margin-bottom: 10px;
+  }
+  
+  .dashboard-container p {
+    font-size: 1rem;
+    color: #6c757d;
+    margin-bottom: 30px;
+  }
+  
+  /* Tabs */
+  .tab-buttons {
+    display: flex;
+    gap: 3rem;
+    margin-bottom: 30px;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    /* background-color: rgba(255, 255, 255, 0.8); */
+  }
+  
+  .tab-buttons button {
+    /* padding: 12px 24px; */
+    width: max-content;
+    font-size: 1.2rem;
+    /* background-color: #e9ecef; */
+    background-color: rgba(255, 255, 255, 0);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #495057;
+    transition: all 0.3s ease;
+  }
+  
+  .tab-buttons button.active,
+  .tab-buttons button:hover {
+    text-decoration: underline;
+
+  }
+  
+  /* Home Tab */
+  .dashboard-home h2 {
+    font-size: 1.8rem;
+    color: #343a40;
+    margin-bottom: 15px;
+  }
+  
+  .dashboard-home ul {
+    padding-left: 20px;
+  }
+  
+  .dashboard-home li {
+    margin-bottom: 8px;
+    color: #495057;
+  }
+  
+  /* Form Styles */
+  .child-form {
+    background-color: #fdfdfd;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    width: 800px;
+    /* width: 100%; */
+    /* max-width: 100%; */
+  }
+  
+  .child-form label {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.2rem;
+    color: #343a40;
+    font-weight: 500;
+  }
+  
+  .child-form input,
+  .child-form select,
+  .child-form textarea {
+    margin-top: 6px;
+    padding: 10px 14px;
+    font-size: 1rem;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    transition: border-color 0.3s ease;
+  }
+  
+  .child-form input:focus,
+  .child-form select:focus,
+  .child-form textarea:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  .child-form button {
+    padding: 12px 20px;
+    background-color: #28a745;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+  }
+  
+  .child-form button:hover {
+    background-color: #218838;
+  }
+  
+  /* Table Styles */
+  .child-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 0.95rem;
+    background-color: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  }
+  
+  .child-table th,
+  .child-table td {
+    padding: 14px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .child-table th {
+    background-color: #f1f3f5;
+    font-weight: 600;
+  }
+  
+  .child-table tr:hover {
+    background-color: #f9fafb;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .dashboard-container {
+      padding: 20px;
+    }
+  
+    .tab-buttons {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .child-form {
+      width: 100%;
+    }
+  
+    .child-table th,
+    .child-table td {
+      padding: 10px;
+    }
+  }
+  
