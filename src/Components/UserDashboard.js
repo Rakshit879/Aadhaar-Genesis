@@ -6,7 +6,6 @@ import { db } from "../firebaseConfig";
 import { doc, getDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 
-// Default empty child data
 const initialChildData = {
   name: "",
   gender: "",
@@ -20,7 +19,7 @@ const initialChildData = {
   fatherName: "",
   motherName: "",
   address: "",
-  certificateUrl: "", // Document URL added for downloading
+  certificateUrl: "",
   uniqueId: "",
   createdAt: null,
 };
@@ -30,11 +29,15 @@ function UserDashboard() {
   const [childData, setChildData] = useState(initialChildData);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [showSlotBooking, setShowSlotBooking] = useState(false);
+  const [slotDateTime, setSlotDateTime] = useState("");
+
   const navigate = useNavigate();
+
   const logout = () => {
     console.log("Logging out");
     navigate("/");
-  }
+  };
 
   const handleSearch = async () => {
     setLoading(true);
@@ -62,20 +65,19 @@ function UserDashboard() {
     if (childData.certificateUrl) {
       const googleDriveUrl = childData.certificateUrl;
 
-      // Check if the URL is a Google Drive link
       if (googleDriveUrl.includes("drive.google.com")) {
-        const fileId = googleDriveUrl.split("/d/")[1]?.split("/")[0]; // Extract the FILE_ID
+        const fileId = googleDriveUrl.split("/d/")[1]?.split("/")[0];
         const downloadUrl = `https://drive.google.com/uc?id=${fileId}&export=download`;
 
         const link = document.createElement("a");
-        link.href = downloadUrl; // Set the modified URL for direct download
+        link.href = downloadUrl;
         link.setAttribute("download", "certificate.pdf");
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
       } else {
         const link = document.createElement("a");
-        link.href = childData.certificateUrl; // Use the original URL for non-Google Drive files
+        link.href = childData.certificateUrl;
         link.setAttribute("download", "certificate.pdf");
         document.body.appendChild(link);
         link.click();
@@ -84,6 +86,17 @@ function UserDashboard() {
     }
   };
 
+  const handleConfirmSlot = () => {
+    if (slotDateTime) {
+      alert(
+        `Slot has been booked for the following date and time for the person: ${childData.name || "Unknown"}\n\n${new Date(slotDateTime).toLocaleString()}`
+      );
+      setShowSlotBooking(false);
+      setSlotDateTime("");
+    } else {
+      alert("Please select a date and time.");
+    }
+  };
 
   return (
     <div id="UserDashboard_div">
@@ -119,7 +132,6 @@ function UserDashboard() {
             <p><strong>Unique ID:</strong> {childData.uniqueId || "—"}</p>
             <p><strong>Created At:</strong> {childData.createdAt ? childData.createdAt.toDate().toLocaleString() : "—"}</p>
 
-            {/* Download Document Button */}
             {childData.certificateUrl ? (
               <div>
                 <button onClick={handleDownload} className="download-button">
@@ -129,9 +141,30 @@ function UserDashboard() {
             ) : (
               <p>No certificate available for this baby.</p>
             )}
-            <div className="logout-button" style={{width:"120px"}}>
+
+            <div className="logout-button" style={{ width: "120px", marginTop: "10px" }}>
               <button onClick={logout}>Logout</button>
             </div>
+
+            {/* 📅 Book Slot Button */}
+            <div style={{ padding: "0.3rem 0.7rem" }}>
+              <button style={{ backgroundColor: "#fcf4d8"}} onClick={() => setShowSlotBooking(true)}>Book Slot</button>
+            </div>
+
+            {showSlotBooking && (
+              <div style={{ marginTop: "10px" }}>
+                <label>Select Date and Time:</label><br />
+                <input
+                  type="datetime-local"
+                  value={slotDateTime}
+                  onChange={(e) => setSlotDateTime(e.target.value)}
+                />
+                <br />
+                <button onClick={handleConfirmSlot} style={{ marginTop: "8px",backgroundColor: "#fcf4d8" }}>
+                  Confirm Booking
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
