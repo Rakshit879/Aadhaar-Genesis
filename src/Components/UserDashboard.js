@@ -4,6 +4,7 @@ import Logo from '../Resources/Logo.jpg';
 
 import { db } from "../firebaseConfig";
 import { doc, getDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 // Default empty child data
 const initialChildData = {
@@ -29,6 +30,11 @@ function UserDashboard() {
   const [childData, setChildData] = useState(initialChildData);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const logout = () => {
+    console.log("Logging out");
+    navigate("/");
+  }
 
   const handleSearch = async () => {
     setLoading(true);
@@ -94,6 +100,9 @@ function UserDashboard() {
           />
           <button id="search_buttom" onClick={handleSearch}>Search</button>
           {error && <p style={{ color: "red" }}>{error}</p>}
+        </div>
+        <div className="logout-button">
+          <button onClick={logout}>Logout</button>
         </div>
 
         <div className="right">

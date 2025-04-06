@@ -2,11 +2,17 @@ import React, { useState, useEffect } from "react";
 import "../Styles/AdminDashboard.css";
 import { db } from "../firebaseConfig";
 import { collection, addDoc, doc, setDoc,getDocs } from "firebase/firestore"; // Make sure this import is present
-import emailjs, { send } from "emailjs-com";
+import emailjs from "emailjs-com";
+import { useNavigate } from "react-router-dom";
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState("home");
   const [childRecords, setChildRecords] = useState([]);
+  const navigate = useNavigate();
+  const logout = () => {
+    console.log("Logging out");
+    navigate("/");
+  }
   const [formData, setFormData] = useState({
     name: "",
     dob: "",
@@ -112,6 +118,10 @@ const AdminDashboard = () => {
 
   return (
     <div className="dashboard-container">
+      {/* Logout Button */}
+      <div className="logout-button">
+        <button onClick={logout}>Logout</button>
+      </div>
       {/* Tabs */}
       <div className="tab-buttons">
         <button onClick={() => setActiveTab("home")} className={activeTab === "home" ? "active" : ""}>

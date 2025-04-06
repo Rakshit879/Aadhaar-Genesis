@@ -9,6 +9,28 @@ body {
     width: 100vw;
     height: 100vh;
   }
+
+  .logout-button {
+    display: flex;
+    justify-content: flex-end;
+    margin: 10px 20px;
+  }
+  
+  .logout-button button {
+    background-color: #e63946;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .logout-button button:hover {
+    background-color: #d62828;
+  }
+  
   
   .dashboard-container {
     padding: 40px;
