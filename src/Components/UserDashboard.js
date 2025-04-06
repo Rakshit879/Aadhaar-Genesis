@@ -61,12 +61,12 @@ function UserDashboard() {
   const handleDownload = () => {
     if (childData.certificateUrl) {
       const googleDriveUrl = childData.certificateUrl;
-  
+
       // Check if the URL is a Google Drive link
       if (googleDriveUrl.includes("drive.google.com")) {
         const fileId = googleDriveUrl.split("/d/")[1]?.split("/")[0]; // Extract the FILE_ID
         const downloadUrl = `https://drive.google.com/uc?id=${fileId}&export=download`;
-        
+
         const link = document.createElement("a");
         link.href = downloadUrl; // Set the modified URL for direct download
         link.setAttribute("download", "certificate.pdf");
@@ -83,7 +83,7 @@ function UserDashboard() {
       }
     }
   };
-  
+
 
   return (
     <div id="UserDashboard_div">
@@ -100,9 +100,6 @@ function UserDashboard() {
           />
           <button id="search_buttom" onClick={handleSearch}>Search</button>
           {error && <p style={{ color: "red" }}>{error}</p>}
-        </div>
-        <div className="logout-button">
-          <button onClick={logout}>Logout</button>
         </div>
 
         <div className="right">
@@ -132,6 +129,9 @@ function UserDashboard() {
             ) : (
               <p>No certificate available for this baby.</p>
             )}
+            <div className="logout-button" style={{width:"120px"}}>
+              <button onClick={logout}>Logout</button>
+            </div>
           </div>
         </div>
       </div>

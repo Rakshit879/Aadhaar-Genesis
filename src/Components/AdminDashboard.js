@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../Styles/AdminDashboard.css";
 import { db } from "../firebaseConfig";
-import { collection, addDoc, doc, setDoc,getDocs } from "firebase/firestore"; // Make sure this import is present
+import { collection, addDoc, doc, setDoc, getDocs } from "firebase/firestore"; // Make sure this import is present
 import emailjs from "emailjs-com";
 import { useNavigate } from "react-router-dom";
 
@@ -38,10 +38,10 @@ const AdminDashboard = () => {
         setChildRecords(childrenData);
       }
     };
-  
+
     fetchChildren();
   }, [activeTab]);
-  
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -53,7 +53,7 @@ const AdminDashboard = () => {
       email: recipientEmail,
       unique_id: uniqueId,
     };
-  
+
     emailjs
       .send("service_007fzna", "template_7xb7a1k", templateParams, "TUzoqEA1E9DDCvzt_")
       .then(
@@ -105,7 +105,7 @@ const AdminDashboard = () => {
         disability: "",
         hasBirthmark: "No",
         birthmarkLocation: "",
-        certificateUrl:"",
+        certificateUrl: "",
       });
 
       setActiveTab("view");
@@ -119,9 +119,6 @@ const AdminDashboard = () => {
   return (
     <div className="dashboard-container">
       {/* Logout Button */}
-      <div className="logout-button">
-        <button onClick={logout}>Logout</button>
-      </div>
       {/* Tabs */}
       <div className="tab-buttons">
         <button onClick={() => setActiveTab("home")} className={activeTab === "home" ? "active" : ""}>
@@ -133,6 +130,9 @@ const AdminDashboard = () => {
         <button onClick={() => setActiveTab("view")} className={activeTab === "view" ? "active" : ""}>
           View All Data
         </button>
+        <div className="logout-button">
+          <button onClick={logout} style={{backgroundColor:"red",color:"white"}}>Logout</button>
+        </div>
       </div>
       <h1 style={{ fontSize: "2.8rem", fontWeight: "bold", color: "#2b2d42" }}>
         DocXyy Hospital Dashboard
@@ -213,7 +213,7 @@ const RegisterChildForm = ({ formData, handleChange, handleSubmit }) => (
     </label>
     <label>
       Email Address
-      <input type="email" name="email" value={formData.email} onChange={handleChange} required/>
+      <input type="email" name="email" value={formData.email} onChange={handleChange} required />
     </label>
     <label>
       Address
@@ -249,7 +249,7 @@ const RegisterChildForm = ({ formData, handleChange, handleSubmit }) => (
     )}
     <label>
       Certificate Url
-      <input type="text" name="certificateUrl" value={formData.certificateUrl} onChange={handleChange} required/>
+      <input type="text" name="certificateUrl" value={formData.certificateUrl} onChange={handleChange} required />
     </label>
     <button type="submit">Submit</button>
   </form>
