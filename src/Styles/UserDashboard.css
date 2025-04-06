@@ -1,7 +1,7 @@
 #UserDashboard_div {
     width: 100%;
     min-height: 100vh;
-    background-image: url("../Resources/AdminDashboardBGC.png"); /* 🔁 adjust the path if needed */
+    background-image: url("../Resources/AdminDashboardBGC.png"); 
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -63,9 +63,9 @@
   
   #search_buttom {
     padding: 0.6rem 1.5rem;
-    background-color: #0077ff;
-    color: white;
-    border: none;
+    background-color: #fcf4d8;
+    font-size: 1.2rem;
+    border: 2px solid black;
     border-radius: 8px;
     font-size: 1rem;
     font-weight: 600;
@@ -74,7 +74,7 @@
   }
   
   #search_buttom:hover {
-    background-color: #005fcb;
+    background-color: #fdeeb8;
   }
   
   .result {
@@ -102,4 +102,14 @@
       grid-template-columns: 1fr 1fr;
     }
   }
-  
+  .download-button{
+    background-color: #fcf4d8;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+    font-weight: 700;
+    font-size: 1.2rem;
+    border: 2px solid black;
+  }
+  .download-button:hover {
+    background-color: #fdeeb8;
+  }
