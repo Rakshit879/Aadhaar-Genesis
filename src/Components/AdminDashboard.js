@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../Styles/AdminDashboard.css";
 import { db } from "../firebaseConfig";
 import { collection, addDoc, doc, setDoc,getDocs } from "firebase/firestore"; // Make sure this import is present
+import emailjs, { send } from "emailjs-com";
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState("home");
@@ -14,6 +15,7 @@ const AdminDashboard = () => {
     weight: "",
     fatherName: "",
     motherName: "",
+    email: "",
     address: "",
     category: "",
     disability: "",
@@ -40,6 +42,24 @@ const AdminDashboard = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const sendEmail = (recipientEmail, uniqueId) => {
+    const templateParams = {
+      email: recipientEmail,
+      unique_id: uniqueId,
+    };
+  
+    emailjs
+      .send("service_007fzna", "template_7xb7a1k", templateParams, "TUzoqEA1E9DDCvzt_")
+      .then(
+        (response) => {
+          console.log("Email sent successfully!", response.status, response.text);
+        },
+        (err) => {
+          console.error("Error sending email:", err);
+        }
+      );
+  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -60,6 +80,9 @@ const AdminDashboard = () => {
       });
 
       alert(`Child registered successfully ✅\nID: ${docRef.id}`);
+      console.log(docRef.id);
+
+      sendEmail(formData.email, docRef.id);
 
       // Reset form
       setFormData({
@@ -70,6 +93,7 @@ const AdminDashboard = () => {
         weight: "",
         fatherName: "",
         motherName: "",
+        email: "",
         address: "",
         category: "",
         disability: "",
@@ -178,6 +202,10 @@ const RegisterChildForm = ({ formData, handleChange, handleSubmit }) => (
       <input type="text" name="motherName" value={formData.motherName} onChange={handleChange} required />
     </label>
     <label>
+      Email Address
+      <input type="email" name="email" value={formData.email} onChange={handleChange} required/>
+    </label>
+    <label>
       Address
       <textarea name="address" value={formData.address} onChange={handleChange} required />
     </label>
@@ -233,6 +261,7 @@ const ChildList = ({ childRecords }) => (
             <th>Weight</th>
             <th>Father</th>
             <th>Mother</th>
+            <th>Email</th>
             <th>Address</th>
             <th>Category</th>
             <th>Disability</th>
@@ -250,6 +279,7 @@ const ChildList = ({ childRecords }) => (
               <td>{child.weight}</td>
               <td>{child.fatherName}</td>
               <td>{child.motherName}</td>
+              <td>{child.email}</td>
               <td>{child.address}</td>
               <td>{child.category}</td>
               <td>{child.disability || "None"}</td>
