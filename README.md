@@ -1,3 +1,7 @@
+# Project Description
+
+Doc2Door is a full-stack web application built using React and Firebase that simplifies the process of generating and managing essential documents for newborns. The platform allows hospital staff to fill in birth details through a dedicated form, which are then securely uploaded and automatically forwarded to the concerned government authorities for birth certificate processing. Parents can access and download the birth certificate directly from the portal without the need to visit any physical office. After five years, the platform provides parents the option to schedule an Aadhaar card registration appointment for their child at a preferred date and time. An authorized agent visits their home to collect biometric data, such as fingerprints, required for Aadhaar generation. Once the Aadhaar card is issued, parents can securely download the document from the portal. The application features secure authentication using Firebase Auth and real-time data storage with Firestore, creating a seamless experience for both hospitals and parents.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
