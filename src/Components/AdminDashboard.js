@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../Styles/AdminDashboard.css";
 import { db } from "../firebaseConfig";
-import { collection, addDoc, doc, setDoc, getDocs } from "firebase/firestore"; // Make sure this import is present
+import { collection, addDoc, doc, setDoc, getDocs } from "firebase/firestore";
 import emailjs from "emailjs-com";
 import { useNavigate } from "react-router-dom";
 
@@ -71,11 +71,10 @@ const AdminDashboard = () => {
     e.preventDefault();
 
     try {
-      // First, create the document with an auto-generated ID
       const docRef = await addDoc(collection(db, "children"), {
         ...formData,
         createdAt: new Date(),
-        uniqueId: "" // placeholder, we'll update this
+        uniqueId: "" 
       });
 
       // Then, update the same document to include its own ID as 'uniqueId'
@@ -90,7 +89,6 @@ const AdminDashboard = () => {
 
       sendEmail(formData.email, docRef.id);
 
-      // Reset form
       setFormData({
         name: "",
         dob: "",
